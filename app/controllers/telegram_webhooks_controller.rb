@@ -43,7 +43,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     img_link, summary = get_moe_girl_info(term)
 
     if img_link.empty? or summary.empty?
-      if img_link.empty?
+      if img_link.empty? and not summary.empty?
         respond_with :message, text: summary
 
       else
