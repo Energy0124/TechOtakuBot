@@ -11,7 +11,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: t('.content')
   end
 
-  def moegirl_api(term)
+  def moegirl_api(*args)
+    if args.any?
+      term=args.first
+    end
     client = MediawikiApi::Client.new "https://zh.moegirl.org/api.php"
     response = client.action :parse, page: term, section: 0, uft8: 1, redirects: 1, prop: %w(text)
     puts response.data
@@ -35,7 +38,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   end
 
-  def moegirl(term)
+  def moegirl(term='')
 
     img_link, summary = get_moe_girl_info(term)
 
@@ -170,7 +173,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
         img_link = img['src']
         break
       end
-      if img_link.empty?
+      if img_link.strip.chomp.empty?
         puts 'try another way'
         html_doc.css('#mw-content-text table img').each do |img|
           puts img
@@ -178,7 +181,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
           break
         end
       end
-      return img_link, summary
+      return img_link.strip.chomp, summary.strip.chomp
     rescue OpenURI::HTTPError => e
       if e.message == '404 Not Found'
         # handle 404 error
@@ -187,8 +190,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
         raise e
       end
     end
-
-
   end
 
 end
