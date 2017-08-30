@@ -10,6 +10,7 @@ Will you save the world with me?
 
 - `/start` - Greeting.
 - `/help`
+- `/moegirl %term%` - Search for term on zh.moegirl.org
 - `/memo %text%` - Saves text to session.
 - `/remind_me` - Replies with text from session.
 - `/keyboard` - Simple keyboard.
