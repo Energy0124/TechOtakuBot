@@ -9,6 +9,7 @@ en:
     help:
       content: |
         Available cmds:
+        /moegirl %term% - Search on zh.moegirl.org (/moegirl term)
         /memo %text% - Saves text to session.
         /remind_me - Replies with text from session.
         /keyboard - Simple keyboard.

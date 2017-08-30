@@ -43,11 +43,18 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     img_link, summary = get_moe_girl_info(term)
 
     if img_link.empty? or summary.empty?
-      if summary.empty?
-        respond_with :photo, photo: 'https://img.moegirl.org/common/1/1a/%E5%AF%BF%E5%8F%B8%E8%90%8C%E7%99%BE%E5%A8%98.png', caption: t('.missing')
-      else
+      if img_link.empty?
         respond_with :message, text: summary
+
+      else
+        if summary.empty? and img_link.empty?
+          respond_with :photo, photo: 'https://img.moegirl.org/common/1/1a/%E5%AF%BF%E5%8F%B8%E8%90%8C%E7%99%BE%E5%A8%98.png', caption: t('.missing')
+        else
+          respond_with :photo, photo: img_link, caption: summary
+
+        end
       end
+
 
     else
       puts img_link.empty?, summary
