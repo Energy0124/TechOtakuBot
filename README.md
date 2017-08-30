@@ -1,13 +1,10 @@
-# Example telegram bot app
+# TechOtakuBot
 
-This app uses [telegram-bot](https://github.com/telegram-bot-rb/telegram-bot) gem.
-Want to see the [bot code](https://github.com/telegram-bot-rb/telegram_bot_app/blob/master/app/controllers/telegram_webhooks_controller.rb)
-first?
+Tech otaku saves the world! 
 
-Explore separate commits to check evolution of code.
+Will you save the world with me?
 
-Want a clean setup instead?
-Here is [app teamplate](https://github.com/telegram-bot-rb/rails_template) to help you.
+
 
 ## Commands
 
@@ -84,3 +81,6 @@ bin/rspec
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/telegram-bot-rb/telegram_bot_app.
+
+## Credits
+This app uses [telegram-bot](https://github.com/telegram-bot-rb/telegram-bot) gem and  bot template [telegram_bot_app](https://github.com/telegram-bot-rb/telegram_bot_app).
