@@ -1,6 +1,7 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
   context_to_action!
+  before_action :config
 
 
   def start(*)
@@ -38,7 +39,15 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   end
 
-  def moegirl(term='')
+  def moegirl(*term)
+
+    if term.any?
+      term = term.join('_')
+
+    else
+      term = 'Special:随机页面'
+    end
+    puts term
 
     img_link, summary = get_moe_girl_info(term)
 
@@ -63,6 +72,34 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
+  def miku(*)
+    hb_img ='http://img1.ak.crunchyroll.com/i/spire2/c2a696f5add89d039eedfefd77922fbf1492087485_full.jpg'
+    miku_img ='http://orig02.deviantart.net/54bb/f/2014/241/6/5/jpg_by_leek_s-d7x58ff.png'
+    bd= Date.new 2007,8,31
+    if Date.today.day.equal? bd.day and Date.today.month.equal? bd.month
+      respond_with :photo, photo: hb_img , caption: t('.hb')
+    else
+      respond_with :photo, photo: miku_img , caption: t('.mikumikumi')
+
+    end
+
+  end
+
+  def youtube(*keyword)
+    if keyword.any?
+      keyword = keyword.join ' '
+    else
+      keyword = 'miku'
+
+    end
+
+
+    videos = Yt::Collections::Videos.new
+    video =videos.where(q: keyword ,order: 'relevance').first
+    respond_with :message, text: "https://www.youtube.com/watch?v=#{video.id}"
+
+
+  end
 
   def memo(*args)
     if args.any?
@@ -199,6 +236,14 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
+
+  private
+  def config
+    Yt.configure do |config|
+      config.api_key = Rails.application.secrets.google['token']
+      config.log_level = :debug
+    end
+  end
 end
 
 
