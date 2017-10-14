@@ -49,4 +49,9 @@ en:
     miku:
       hb: Happy birthday, Miku!
       mikumikumi: Miku miku mi!
+    hb:
+      york: Happy birthday, York!
+      lung: Happy birthday, Peter!
+      nick: Happy birthday, Nick!
+      else: Happy birthday, someone that I haven't hardcoded!
 

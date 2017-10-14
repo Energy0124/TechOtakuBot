@@ -12,6 +12,27 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: t('.content')
   end
 
+  def hb(*)
+    today = Date.today
+    # stupid hardcode, but anyway :P
+    bd ={
+        york: Date.new(today.year, 10, 15),
+        lung: Date.new(today.year, 10, 28),
+        nick: Date.new(today.year, 12, 2),
+    }
+    hb_img ='http://i0.kym-cdn.com/photos/images/facebook/000/115/357/portal-cake.jpg'
+    case Date.today
+      when bd[:york]
+          respond_with :document , document: "https://i.imgur.com/NI6e6FF.gif", caption: t('.york')
+      when bd[:lung]
+          respond_with :document , document: "https://i.imgur.com/NI6e6FF.gif", caption: t('.lung')
+      when bd[:nick]
+          respond_with :document , document: "https://i.imgur.com/NI6e6FF.gif", caption: t('.nick')
+      else
+        respond_with :photo, photo: hb_img, caption: t('.else')
+    end
+  end
+
   def moegirl_api(*args)
     if args.any?
       term=args.first
@@ -75,11 +96,11 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   def miku(*)
     hb_img ='http://img1.ak.crunchyroll.com/i/spire2/c2a696f5add89d039eedfefd77922fbf1492087485_full.jpg'
     miku_img ='http://orig02.deviantart.net/54bb/f/2014/241/6/5/jpg_by_leek_s-d7x58ff.png'
-    bd= Date.new 2007,8,31
+    bd= Date.new 2007, 8, 31
     if Date.today.day.equal? bd.day and Date.today.month.equal? bd.month
-      respond_with :photo, photo: hb_img , caption: t('.hb')
+      respond_with :photo, photo: hb_img, caption: t('.hb')
     else
-      respond_with :photo, photo: miku_img , caption: t('.mikumikumi')
+      respond_with :photo, photo: miku_img, caption: t('.mikumikumi')
 
     end
 
@@ -93,9 +114,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
     end
 
-
     videos = Yt::Collections::Videos.new
-    video =videos.where(q: keyword ,order: 'relevance').first
+    video =videos.where(q: keyword, order: 'relevance').first
     respond_with :message, text: "https://www.youtube.com/watch?v=#{video.id}"
 
 
